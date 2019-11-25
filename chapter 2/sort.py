@@ -30,7 +30,7 @@ class sort_base():
         判断数组是否有序(升序)
         """
         for i in range(self.length-1):
-            if not self.__less(i, i+1):
+            if not self.less(i, i+1):
                 return False
         return True
 
@@ -67,4 +67,54 @@ class sort_insertion(sort_base):
         a = sort_insertion(arr_test)
         a.sort()
         a.show()
+
+
+class sort_merge(sort_base):
+    def __init__(self, arr):
+        self.arr = arr
+        self.length = len(self.arr)
+        self.aux = self.arr.copy()
+
+    def merge(self, low, high):
+        
+        mid  = low + (high - low)// 2
+        i = low
+        j = mid + 1
+        self.aux[low:high+1] = self.arr[low:high+1]       
+        for k in range(low, high+1):
+            if i > mid:
+                self.arr[k] = self.aux[j]
+                j += 1
+            elif j > high:
+                self.arr[k] = self.aux[i]
+                i += 1
+            elif self.aux[j] < self.aux[i]:
+                self.arr[k] = self.aux[j]
+                j += 1
+            else:
+                self.arr[k] = self.aux[i]
+                i += 1
+    def sort(self):
+        self.__sort(0, self.length-1)
+    
+    def __sort(self, low, high):
+
+        if high <= low:
+            return self.arr[low]
+        mid  = low + (high - low)// 2
+        
+        self.__sort(low, mid)
+        self.__sort(mid+1, high)
+        self.merge(low, high)
+
+
+    def show(self):
+        self.sort()
+        print(self.arr)
+
+
+arr_test = [1,3,4,78,23,54,101]
+a = sort_merge(arr_test)
+
+a.show()
 
