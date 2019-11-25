@@ -107,14 +107,21 @@ class sort_merge(sort_base):
         self.__sort(mid+1, high)
         self.merge(low, high)
 
+    def sort2(self):
+        sz = 1
+        while sz < self.length:
+            low = 0
+            while low < self.length - sz:
+                self.merge(low, min(low + 2*sz-1, self.length-1))
+                low += 2 * sz
+            sz *= 2
 
     def show(self):
-        self.sort()
+        self.sort2()
         print(self.arr)
 
 
 arr_test = [1,3,4,78,23,54,101]
 a = sort_merge(arr_test)
-
 a.show()
 
