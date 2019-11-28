@@ -120,8 +120,35 @@ class sort_merge(sort_base):
         self.sort2()
         print(self.arr)
 
+class sort_quick(sort_base):
+    def __init__(self, arr):
+        super(sort_quick, self).__init__(arr)
+    
+    def sort(self):
+        self.__quick_sort(0, self.length-1)
 
-arr_test = [1,3,4,78,23,54,101]
-a = sort_merge(arr_test)
+    def __quick_sort(self, low, high):
+        if low < high:
+            pi = self.__partition(low, high)
+            self.__quick_sort(low, pi-1)
+            self.__quick_sort(pi+1, high)
+
+    def __partition(self, low, high):
+        i = low - 1
+        pivot = self.arr[high]
+        for j in range(low, high):
+            if self.arr[j] < pivot:
+                i += 1
+                self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
+        self.arr[i+1], self.arr[j+1] = self.arr[j+1], self.arr[i+1]
+        return i + 1
+    
+    def show(self):
+        self.sort()
+        print(self.arr)
+
+
+arr_test = [1,200,4,78,23,54,101]
+a = sort_quick(arr_test)
 a.show()
 
