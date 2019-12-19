@@ -16,7 +16,7 @@ class Heap:
         for i in arr:
             self.insert(i)
 
-    def __exchange(self, i, j):
+    def exchange(self, i, j):
         """
         交换两个元素
         """
@@ -35,7 +35,7 @@ class Heap:
         由下至上的堆有序化。
         """
         while k > 1 and self.__less(k//2, k):
-            self.__exchange(k//2, k)
+            self.exchange(k//2, k)
             k = k// 2
 
     def sink(self, k):
@@ -45,11 +45,11 @@ class Heap:
         """
         while 2 * k <= len(self.arr):
             j = 2 * k
-            if j < N and self.__less(j, j+1):
+            if j < len(self.arr)-1 and self.__less(j, j+1):
                 j += 1
             if not self.__less(k, j):
                 break
-            self.__exchange(k, j)
+            self.exchange(k, j)
             k = j
     
     def insert(self, v):
@@ -65,9 +65,10 @@ class Heap:
         删除最大元素
         """
         end_index = len(self.arr)
-        self.__exchange(1, end_index)
+        self.exchange(1, end_index)
         self.arr.pop(-1)
         self.sink(1)
+    
 if __name__ == "__main__":
     arr = [1, 3, 7, 4, 2, 1, 3, 5, 0, 13]
     a = Heap(arr)
